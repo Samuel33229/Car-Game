@@ -60,6 +60,15 @@ pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 + ROAD_W/2 - ROADMARK_
 # Update changes
 pygame.display.update()
 
+# Load car player image
+car_player = pygame.image.load("mycar.png")
+car_player_loc = car_player.get_rect()
+car_player_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.7
+
+# Load car enemy image
+car_enemy = pygame.image.load("enemycar.png")
+car_enemy_loc = car_enemy.get_rect()
+car_enemy_loc.center = SCREEN_WIDTH/2 - ROAD_W/4, SCREEN_HEIGHT*0.2
 
 # Game loop
 running = True
@@ -72,4 +81,13 @@ while running:
         if  event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False   
+
+    # Draw player 
+    screen.blit(car_player, car_player_loc)
+    
+    # Draw enemy
+    screen.blit(car_enemy, car_enemy_loc)
+
+    # Update the app
+    pygame.display.update()
 
