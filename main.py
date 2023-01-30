@@ -46,17 +46,6 @@ pygame.display.set_icon(ICON)
 # Set background color
 screen.fill((60, 220, 0))
 
-## P2.2 - Draw the road
-pygame.draw.rect(screen, (50, 50, 50), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
-
-## p2.4 - Draw the roadmark
-pygame.draw.rect(screen, (255, 146, 139), (SCREEN_WIDTH/2 - ROADMARK_W/2, 0, ROADMARK_W, SCREEN_HEIGHT))
-
-## p2.5 - Draw the white lines
-pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 - ROAD_W/2 + ROADMARK_W * 2, 0, ROADMARK_W, SCREEN_HEIGHT))
-
-pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 + ROAD_W/2 - ROADMARK_W * 3, 0, ROADMARK_W, SCREEN_HEIGHT))
-
 # Update changes
 pygame.display.update()
 
@@ -81,6 +70,23 @@ while running:
         if  event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False   
+
+            if event.key in [K_a, K_LEFT]:
+                car_player_loc = car_player_loc.move(-ROAD_W/2, 0)
+
+            if event.key in [K_d, K_RIGHT]:
+                car_player_loc = car_player_loc.move(ROAD_W/2, 0)
+
+    ## P2.2 - Draw the road
+    pygame.draw.rect(screen, (50, 50, 50), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
+
+    ## p2.4 - Draw the roadmark
+    pygame.draw.rect(screen, (255, 146, 139), (SCREEN_WIDTH/2 - ROADMARK_W/2, 0, ROADMARK_W, SCREEN_HEIGHT))
+
+    ## p2.5 - Draw the white lines
+    pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 - ROAD_W/2 + ROADMARK_W * 2, 0, ROADMARK_W, SCREEN_HEIGHT))
+
+    pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 + ROAD_W/2 - ROADMARK_W * 3, 0, ROADMARK_W, SCREEN_HEIGHT))
 
     # Draw player 
     screen.blit(car_player, car_player_loc)
