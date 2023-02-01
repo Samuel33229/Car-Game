@@ -45,9 +45,23 @@ screen = pygame.display.set_mode( SIZE )
 # Set window title
 pygame.display.set_caption("Car game in Pygame")
 
-# Set icon
+# Icon
 ICON = pygame.image.load("caricon.png")
-pygame.display.set_icon(ICON)
+pygame.display.set_icon( ICON )
+
+# Enemy speed
+speed = 1
+
+# Game Over font
+go_font = pygame.font.Font("font.ttf", 64)
+go_x = 400
+go_y = 400
+
+# Game Over function
+def game_over(x, y):
+    go_text = go_font.render("You Lost!", True, (227, 0, 50))
+    screen.blit( go_text, (x, y))
+
 
 # Set background color
 screen.fill((60, 220, 0))
@@ -66,11 +80,14 @@ car_enemy_loc = car_enemy.get_rect()
 car_enemy_loc.center = LEFT_LANE, SCREEN_HEIGHT*0.200
 
 # Game loop
+counter = 0
 running = True
 while running:
 
+    counter += 1
+
     # Enemy car movement
-    car_enemy_loc[1] += 1
+    car_enemy_loc[1] += speed
 
     # Enemy car appears again
     if car_enemy_loc.y > SCREEN_HEIGHT:
@@ -82,6 +99,12 @@ while running:
 
         else:
             car_enemy_loc.center = LEFT_LANE, -200
+
+    # End game logic
+    if car_player_loc[0] == car_enemy_loc[0] and car_enemy_loc[1] > car_player_loc[1] - 64:
+        #game_over(go_x, go_y)
+        print("You lost!")
+        break
 
     for event in pygame.event.get():
         print( event ) 
