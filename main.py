@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import random 
 pygame.init()
 
 # Windows dimention
@@ -26,10 +27,15 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
-## P2.1 - Road parameters
+# Road parameters
 ROAD_W = 500
+ROADMARK_W = 10
 
-## P2.3 - Roadmark width
+# Lanes limitation
+RIGHT_LANE = SCREEN_WIDTH/2 + ROAD_W/4
+LEFT_LANE = SCREEN_WIDTH/2 - ROAD_W/4
+
+# Roadmark width
 ROADMARK_W = 10
 
 
@@ -52,16 +58,31 @@ pygame.display.update()
 # Load car player image
 car_player = pygame.image.load("mycar.png")
 car_player_loc = car_player.get_rect()
-car_player_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.7
+car_player_loc.center = RIGHT_LANE, SCREEN_HEIGHT*0.8
 
 # Load car enemy image
 car_enemy = pygame.image.load("enemycar.png")
 car_enemy_loc = car_enemy.get_rect()
-car_enemy_loc.center = SCREEN_WIDTH/2 - ROAD_W/4, SCREEN_HEIGHT*0.2
+car_enemy_loc.center = LEFT_LANE, SCREEN_HEIGHT*0.200
 
 # Game loop
 running = True
 while running:
+
+    # Enemy car movement
+    car_enemy_loc[1] += 1
+
+    # Enemy car appears again
+    if car_enemy_loc.y > SCREEN_HEIGHT:
+        car_enemy_loc.y = -200
+
+        # Enemy car appears again randomly
+        if random.randint(0, 1) == 0:
+            car_enemy_loc.center = RIGHT_LANE, -200
+
+        else:
+            car_enemy_loc.center = LEFT_LANE, -200
+
     for event in pygame.event.get():
         print( event ) 
         if event.type == QUIT:
